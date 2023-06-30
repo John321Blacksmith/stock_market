@@ -34,10 +34,11 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # custom apps
     'market.apps.MarketConfig',
-    'usersw.apps.UsersConfig',
+    'users.apps.UsersConfig',
 
     # 3rd party apps
-
+    'rest_framework',
+    # default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -106,6 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

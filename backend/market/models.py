@@ -1,6 +1,6 @@
 import random
+from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import User
 from .options import EXCHANGES
 # Create your models here.
 
@@ -13,13 +13,13 @@ class Order(models.Model):
 	every order wether it
 	is a purchase or sale.
 	"""
-
 	time_created = models.DateTimeField(auto_now_add=True)
 	time_changed = models.DateTimeField(auto_now_add=True)
 	status = models.CharField(default='Active', max_length=25)
-	price = models.DecimalField(max_digits=14, decimal_places=5)
-	amount = models.DecimalField(max_digits=11, decimal_places=2)
+	price = models.DecimalField(max_digits=14, decimal_places=5, null=True)
+	amount = models.DecimalField(max_digits=11, decimal_places=2, null=True)
 	instrument = models.CharField(choices=INSTRUMENTS, max_length=9)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
 
 	class Meta:
 		abstract = True
