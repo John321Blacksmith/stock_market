@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from market.models import Purchase, Sale
 # Create your models here.
 
 
@@ -11,7 +12,6 @@ class CustomUser(User):
 	buy(), or sell() method.
 	"""
 
-
 	# the behavioral methods 
 	# below take the data from
 	# the JSON serializers
@@ -20,7 +20,8 @@ class CustomUser(User):
 		Perform a buying action.
 		:returns: <Purchase obj>.
 		"""
-		return 
+		purchase = Purchase.objects.create(**kwargs)
+		return purchase
 
 	def sell(self, *args, **kwargs):
 		"""
@@ -28,4 +29,5 @@ class CustomUser(User):
 		action.
 		:returns: <Sale obj>
 		"""
-		return 
+		sale = Sale.objects.create(**kwargs)
+		return sale
