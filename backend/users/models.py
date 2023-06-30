@@ -15,19 +15,19 @@ class CustomUser(AbstractUser):
 	# the behavioral methods 
 	# below take the data from
 	# the JSON serializers
-	def buy(self, *args, **kwargs):
+	def buy(self, **kwargs):
 		"""
 		Perform a buying action.
 		:returns: <Purchase obj>.
 		"""
-		purchase = Purchase.objects.create(**kwargs)
+		purchase = Purchase.objects.create(user=self, **kwargs)
 		return purchase
 
-	def sell(self, *args, **kwargs):
+	def sell(self, **kwargs):
 		"""
 		Perform a selling
 		action.
 		:returns: <Sale obj>
 		"""
-		sale = Sale.objects.create(**kwargs)
+		sale = Sale.objects.create(user=self, **kwargs)
 		return sale
