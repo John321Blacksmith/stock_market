@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from .models import Purchase, Sale
-from .options import EXCHANGES
+from .models import Purchase, Sale, INSTRUMENTS
+
 # Create your tests here.
 
 
@@ -23,7 +23,7 @@ class OrderModelDataTest(TestCase):
 		instrument = random_object.instrument
 
 		self.assertEqual(random_object.status, status)
-		self.assertIn(instrument[1], EXCHANGES)
+		self.assertIn(instrument, INSTRUMENTS)
 		self.assertNotEqual(random_object.amount, 0)
 		self.assertNotEqual(random_object.price, 0)
 
@@ -32,10 +32,11 @@ class OrderModelDataTest(TestCase):
 		request_data = {
 			'amount': 99999.9999,
 			'price': 9999.9999,
-			'instrument': 'GBP/USD',
+			'instrument': INSTRUMENTS[0],
 		}
 		# when user hits BUY button, purchase object is formed
 		purchase = self.user.buy(**request_data)
+		purchase.save()
 		# test if the order is a purchase
 		# with corresponding data from the
 		# request data
@@ -43,7 +44,8 @@ class OrderModelDataTest(TestCase):
 		self.assertEqual(purchase.return_side(), 'purchase')
 		self.assertEqual(purchase.amount, request_data['amount'])
 		self.assertEqual(purchase.price, request_data['price'])
-		self.assertIn(purchase.instrument, EXCHANGES)
+		self.assertIn(purchase.instrument, INSTRUMENTS)
+		self.assertEqual(purchase.instrument, INSTRUMENTS[0])
 
 		# test if the purchase belongs to the user
 		self.assertEqual(purchase.user.username, 'Test User')
@@ -52,10 +54,11 @@ class OrderModelDataTest(TestCase):
 		request_data = {
 			'amount': 111111.11111,
 			'price': 111111.11111,
-			'instrument': 'USD/JPY',
+			'instrument': INSTRUMENTS[1],
 		}
 		# when user hits SELL button, sell object is formed
 		sale = self.user.sell(**request_data)
+		sale.save()
 		# test if the order is a sale
 		# with corresponding data from the
 		# request data
@@ -63,7 +66,8 @@ class OrderModelDataTest(TestCase):
 		self.assertEqual(sale.return_side(), 'sale')
 		self.assertEqual(sale.amount, request_data['amount'])
 		self.assertEqual(sale.price, request_data['price'])
-		self.assertIn(sale.instrument, EXCHANGES)
+		self.assertIn(sale.instrument, INSTRUMENTS)
+		self.assertEqual(sale.instrument, INSTRUMENTS[1])
 
 		# test if the purchase belongs to the user
 		self.assertEqual(sale.user.username, 'Test User')
