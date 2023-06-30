@@ -30,7 +30,17 @@ class Order(models.Model):
 		one of two options the
 		user does.
 		"""
-		return self.__class__
+		return self.side
+
+	@classmethod
+	def return_random_object(cls):
+		cls.random_object = cls(
+				price=random.randint(1, 99999999999999) / 100000,
+				amount=random.randint(1, 99999999999) / 100,
+				instrument=random.choice(INSTRUMENTS),
+			)
+
+		return cls.random_object
 
 
 class Purchase(Order):
@@ -38,9 +48,11 @@ class Purchase(Order):
 	This model represents
 	every purchase.
 	"""
+	side = 'purchase'
 
 class Sale(Order):
 	"""
 	This model represents
-	every sal.
+	every sale.
 	"""
+	side = 'sale'
