@@ -32,12 +32,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # async server driver
+    'daphne',
+
+    # socket app
+    'stock',
+
     # custom apps
     'market.apps.MarketConfig',
     'users.apps.UsersConfig',
 
     # 3rd party apps
     'rest_framework',
+    
     # default apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -131,3 +138,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# locate an ASGI server confs 
+ASGI_APPLICATION = 'confs.asgi.application'
+
+# drf settings

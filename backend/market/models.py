@@ -35,8 +35,8 @@ class Order(models.Model):
 	@classmethod
 	def return_random_object(cls):
 		cls.random_object = cls(
-				price=random.randint(1, 99999999999999) / 100000,
-				amount=random.randint(1, 99999999999) / 100,
+				price=random.randint(1, 9999999999) / 100000,
+				amount=random.randint(1, 99999999) / 100,
 				instrument=random.choice(INSTRUMENTS),
 			)
 
